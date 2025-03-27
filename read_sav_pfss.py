@@ -13,11 +13,11 @@ from datetime import datetime
 # 讀取 IDL 的 .sav 檔案
 data_pfss = readsav("C:/Users/chjan/HMI_output_20231104.sav")
 # read aia
-aia = pd.read_csv('aia_20231104_cropped_sp.csv')
+aia = pd.read_csv('read_data/aia_20231104_cropped_sp.csv')
 
 # 讀取 FITS 檔案
-file_path_hmi = "20231104/hmi.m_720s.20231104_000000_TAI.3.magnetogram.fits"
-file_path_aia = "20231104/aia.lev1_euv_12s.2023-11-04T000006Z.193.image_lev1.fits"
+file_path_hmi = "read_data/hmi.m_720s.20231104_000000_TAI.3.magnetogram.fits"
+file_path_aia = "read_data/aia.lev1_euv_12s.2023-11-04T000006Z.193.image_lev1.fits"
 hmi_map = sunpy.map.Map(file_path_hmi)
 aia_map = sunpy.map.Map(file_path_aia)
 # 讀取header
@@ -44,10 +44,10 @@ aia = zoom(aia, zoom_factors, order=1)
 fig = plt.figure(figsize=(16,8))  # 設定圖大小
 ax1 = plt.subplot(121)
 sdoaia193 = cm.cmlist["sdoaia193"]
-img1 = ax1.imshow(aia, cmap=sdoaia193, vmin=0,vmax=600)
+# img1 = ax1.imshow(aia, cmap=sdoaia193, vmin=0,vmax=600)
 # 繪製等高線，數值 = 100
-img1 = ax1.contour(aia, levels=[60], colors='white', linewidths=1)
-img1 = ax1.imshow(BP3DZ[:,:,0], cmap="gray",vmin=-200, vmax=200, alpha=0.5)  # 設定 colormap 和數值範圍
+img1 = ax1.contour(aia, levels=[50], colors='white', linewidths=1)
+img1 = ax1.imshow(BP3DZ[:,:,0], cmap="gray",vmin=-200, vmax=200, alpha=1)  # 設定 colormap 和數值範圍
 ax1.set_title(F"HMI {hmi_time} overlaid on AIA193 {aia_time}")
 # ax1.set_xlabel("X-axis")
 # ax1.set_ylabel("Y-axis")
@@ -66,7 +66,7 @@ cbar2 = plt.colorbar(img2, ax=ax2, fraction=0.046, pad=0.04)
 cbar2.ax.tick_params(labelsize=10)
 # cbar2.ax.set_title('Bz (G)')
 
-plt.savefig("B300.jpg",bboxes_inches = 'tight')
+plt.savefig("output_image/B300.jpg",bboxes_inches = 'tight')
 ax1.minorticks_on()
 ax2.minorticks_on()
 plt.show()
