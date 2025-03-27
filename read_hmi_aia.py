@@ -6,8 +6,8 @@ from astropy.wcs import WCS
 from matplotlib.ticker import (MultipleLocator, AutoMinorLocator)
 
 # 讀取 FITS 檔案
-file_path_hmi = "20231104/hmi.m_720s.20231104_000000_TAI.3.magnetogram.fits"
-file_path_aia = "20231104/aia.lev1_euv_12s.2023-11-04T000006Z.193.image_lev1.fits"
+file_path_hmi = "data_1271/hmi.m_45s.20250225_162145_TAI.2.magnetogram.fits"
+file_path_aia = "data_1271/aia.lev1_euv_12s.2025-02-25T162106Z.193.image_lev1.fits"
 hmi_map = sunpy.map.Map(file_path_hmi)
 aia_map = sunpy.map.Map(file_path_aia)
 
