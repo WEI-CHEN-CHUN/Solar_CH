@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 # 讀取 hmi_coronal_hole.npy
 hmi_CH_values = np.load("hmi_coronal_hole.npy")
-hmi_CH_values = hmi_CH_values[np.abs(hmi_CH_values) < 50]
+hmi_CH_values = hmi_CH_values[np.abs(hmi_CH_values) < 10]
 print("擷取後的磁場數值數量:", hmi_CH_values.shape)
 # 繪製直方圖
 plt.figure(figsize=(8, 6))
