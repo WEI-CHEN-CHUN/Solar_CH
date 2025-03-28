@@ -58,12 +58,12 @@ print(f"Resized aia_df shape: {aia_df.shape}")
 # 繪製hmi (灰階)
 fig = plt.figure(figsize = (10, 10))
 ax = plt.subplot(projection=aia_map)
-aia_map.plot(cmap = "sdoaia193", norm=mcolors.PowerNorm(0.5))
+aia_map.plot(cmap = "sdoaia193", vmin=0, vmax=600, norm = mcolors.PowerNorm(1))
 # 設定hmi顯示
 norm = mcolors.Normalize(vmin=-200, vmax=200)
 hmi_map.plot_settings["norm"] = norm  # 設定顏色條範圍
 # img1 = ax.contour(aia_df, levels=[100], colors='white', linewidths=1)
-img1 = hmi_map.plot(cmap = "gray", autoalign=True, alpha = 0.4)
+img1 = hmi_map.plot(cmap = "gray", autoalign=True, alpha = 0)
 cbar = plt.colorbar(ax=ax, label="Magnetic Field Strength (G)", fraction=0.046, pad=0.04)
 cbar.ax.tick_params(size=10)
 

@@ -17,9 +17,10 @@ print(f"Resized aia shape: {aia.shape}")
 fig = plt.figure(figsize = (10, 10))
 ax = plt.subplot(111)
 sdoaia193 = cm.cmlist["sdoaia193"]
-img1 = ax.contour(aia, levels=[60], colors='white', linewidths=1)
-plt.imshow(aia, cmap=sdoaia193, norm=mcolors.LogNorm(vmin=25, vmax=10000))
-plt.imshow(hmi, cmap="gray", vmin=-200,vmax=200, alpha=0.5)
+CH_threshold = 60
+img1 = ax.contour(aia, levels=[CH_threshold], colors='white', linewidths=1)
+plt.imshow(aia, cmap=sdoaia193, vmin=0, vmax=600)
+plt.imshow(hmi, cmap="gray", vmin=-200,vmax=200, alpha=0.6)
 plt.colorbar(fraction=0.046, pad=0.04)
 plt.xlabel("Solar X (pixel)")
 plt.ylabel("Solar Y (pixel)")
