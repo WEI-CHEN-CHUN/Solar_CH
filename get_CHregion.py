@@ -36,9 +36,12 @@ CH_threshold = 60
 
 # 創建日冕洞的遮罩（低於 threshold 的區域為 True）
 CH_mask = aia < CH_threshold
-
+print(pd.DataFrame(CH_mask))
 # 取出 HMI 磁場數據中屬於日冕洞的值
 hmi_CH_values = hmi[CH_mask]
+
+print(np.average(np.abs(hmi_CH_values)))
+
 
 # 顯示日冕洞區域
 fig = plt.figure(figsize=(8,8))  
