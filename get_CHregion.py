@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from astropy.io import fits
 import pandas as pd
 from scipy.ndimage import zoom
-import sunpy.visualization.colormaps as cm
+import sunpy.visualization.colormaps as spcm
 import sunpy.map
 from datetime import datetime
 #　read cropped csv
@@ -48,7 +48,7 @@ fig = plt.figure(figsize=(8,8))
 # 繪製等高線 on aia
 ax1 = plt.subplot(121)
 img1 = ax1.contour(aia, levels=[CH_threshold], colors='white', linewidths=1)
-sdoaia193 = cm.cmlist["sdoaia193"]
+sdoaia193 = spcm.cmlist["sdoaia193"]
 img1 = ax1.imshow(aia, cmap=sdoaia193, vmin=0, vmax=600)
 ax1.set_title(F"HMI {hmi_time} overlaid on AIA193 {aia_time}")
 cbar1 = plt.colorbar(img1, ax=ax1, fraction=0.046, pad=0.04)
@@ -61,7 +61,7 @@ img2 = ax2.imshow(hmi, cmap = 'gray', vmin=-50, vmax=50)
 ax2.set_title(F"HMI {hmi_time} overlaid on AIA193 {aia_time}")
 cbar2 = plt.colorbar(img2, ax=ax2, fraction=0.046, pad=0.04)
 cbar2.ax.tick_params(labelsize=10)
-plt.show()
+# plt.show()
 
 # 繪製直方圖
 print("擷取前的磁場數值數量:", hmi_CH_values.shape)
@@ -69,13 +69,25 @@ cut_value = 50
 hmi_CH_values = hmi_CH_values[np.abs(hmi_CH_values) < cut_value]
 print(f"<{cut_value}，擷取後的磁場數值數量:", hmi_CH_values.shape)
 plt.figure(figsize=(8, 6))
-plt.hist(hmi_CH_values, bins=200, color='yellow', edgecolor='k', alpha=0.7, linewidth=0.2)
+# plt.hist(hmi_CH_values, bins=200, color='yellow', edgecolor='k', alpha=0.7, linewidth=0.2)
+bins = np.linspace(-cut_value, cut_value, 100)
+# 繪製直方圖 (取得 n: 每個 bin 內的計數, bins: bin 的邊界, patches: 條形物件)
+n, bins, patches = plt.hist(hmi_CH_values, bins=bins, edgecolor='black')
+
+# 修改 bin 顏色 (讓 -15 到 +15 區間為紅色)
+for patch, left_edge in zip(patches, bins[:-1]):
+    if -15 <= left_edge <= 15:
+        patch.set_facecolor('red')  # 設定為紅色
+    else:
+        patch.set_facecolor('blue')  # 其他範圍為藍色
+
 
 # 設定標題與標籤
 plt.title("Histogram of HMI Magnetic Field Values in Coronal Hole")
 plt.xlabel("Magnetic Field Strength (Gauss)")
 plt.ylabel("Frequency")
 plt.grid(True, linestyle="--", alpha=0.5)
+plt.minorticks_on()
 
 # 顯示圖表
 plt.show()
