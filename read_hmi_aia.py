@@ -52,5 +52,5 @@ ax2.set_xlim([x_range21, x_range22])
 ax2.set_ylim([y_range21, y_range22])
 plt.subplots_adjust(wspace=0.4, top=1.1)
 fig.suptitle("CH1271",fontsize = 20)
-plt.show()
+# plt.show()
 
