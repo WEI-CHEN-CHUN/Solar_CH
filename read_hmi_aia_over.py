@@ -11,7 +11,7 @@ from scipy.ndimage import zoom
 
 # 讀取 FITS 檔案
 file_path_hmi = "./data_1271/hmi.m_45s.20250225_162145_TAI.2.magnetogram.fits"
-file_path_aia = "./data_1271/aia.lev1_euv_12s.2025-02-25T162106Z.193.image_lev1.fits"
+file_path_aia = "./data_1271/aia.lev1p5_euv_12s.2025-02-25T162106Z.193.image_lev1p5.fits"
 hmi_map = sunpy.map.Map(file_path_hmi)
 aia_map = sunpy.map.Map(file_path_aia)
 
@@ -27,11 +27,13 @@ for key, value in hmi_header.items():
 # y_range1 = (-1000/3600-aia_header['CRVAL2'])/aia_header['CDELT2']+aia_header['CRPIX2']
 # y_range2 = (1000/3600-aia_header['CRVAL2'])/aia_header['CDELT2']+aia_header['CRPIX2']
 
-left_bottom = SkyCoord(-300 * u.arcsec, -150 * u.arcsec, frame=aia_map.coordinate_frame)
-right_top = SkyCoord(250 * u.arcsec, 600 * u.arcsec, frame=aia_map.coordinate_frame)
+left_bottom = SkyCoord(-440 * u.arcsec, -340 * u.arcsec, frame=aia_map.coordinate_frame)
+right_top = SkyCoord(390 * u.arcsec, 790 * u.arcsec, frame=aia_map.coordinate_frame)
 
 # 裁剪地圖
 aia_map = aia_map.submap(left_bottom, top_right=right_top)
+left_bottom = SkyCoord(-440 * u.arcsec, -340 * u.arcsec, frame=hmi_map.coordinate_frame)
+right_top = SkyCoord(390 * u.arcsec, 790 * u.arcsec, frame=hmi_map.coordinate_frame)
 hmi_map = hmi_map.submap(left_bottom, top_right=right_top)
 
 # 轉換為 DataFrame
@@ -40,8 +42,8 @@ hmi_df = pd.DataFrame(hmi_map.data)
 hmi_df = hmi_df.iloc[:, ::-1]#hmi
 aia_df = aia_df.iloc[::-1, :]#aia
 # 存成 CSV
-aia_csv_filename = "data_1271/aia_CH1271_cropped_sp.csv"
-hmi_csv_filename = "data_1271/hmi_CH1271_cropped_sp.csv"
+aia_csv_filename = "data_1271/aia_CH1271_cropped_1p5_sp.csv"
+hmi_csv_filename = "data_1271/hmi_CH1271_cropped_1p5_sp.csv"
 aia_df.to_csv(aia_csv_filename, index=False, header=False)
 hmi_df.to_csv(hmi_csv_filename, index=False, header=False)
 

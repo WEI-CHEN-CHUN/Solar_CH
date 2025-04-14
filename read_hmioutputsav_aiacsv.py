@@ -11,13 +11,13 @@ from datetime import datetime
 
 
 # 讀取 IDL 的 .sav 檔案
-data_pfss = readsav("C:/Users/chjan/hmi_output_CH1271.sav")
+data_pfss = readsav("C:/Users/chjan/hmi_output_CH1271_1p5.sav")
 # read aia
-aia = pd.read_csv("data_1271/aia_CH1271_cropped_sp.csv")
+aia = pd.read_csv("data_1271/aia_CH1271_cropped_1p5_sp.csv")
 
 # 讀取 FITS 檔案
 file_path_hmi = "./data_1271/hmi.m_45s.20250225_162145_TAI.2.magnetogram.fits"
-file_path_aia = "./data_1271/aia.lev1_euv_12s.2025-02-25T162106Z.193.image_lev1.fits"
+file_path_aia = "./data_1271/aia.lev1p5_euv_12s.2025-02-25T162106Z.193.image_lev1p5.fits"
 hmi_map = sunpy.map.Map(file_path_hmi)
 aia_map = sunpy.map.Map(file_path_aia)
 # 讀取header
@@ -46,7 +46,7 @@ ax1 = plt.subplot(121)
 sdoaia193 = cm.cmlist["sdoaia193"]
 # img1 = ax1.imshow(aia, cmap=sdoaia193, vmin=0,vmax=600)
 # 繪製等高線，數值 = 100
-img1 = ax1.contour(aia, levels=[50], colors='#fbfdaf', linewidths=1)
+img1 = ax1.contour(aia, levels=[60], colors='#fbfdaf', linewidths=1)
 img1 = ax1.imshow(BP3DZ[:,:,0], cmap="gray",vmin=-5, vmax=5, alpha=1)  # 設定 colormap 和數值範圍
 ax1.set_title(F"HMI {hmi_time} overlaid on AIA193 {aia_time}")
 # ax1.set_xlabel("X-axis")
@@ -54,15 +54,15 @@ ax1.set_title(F"HMI {hmi_time} overlaid on AIA193 {aia_time}")
 cbar1 = plt.colorbar(img1, ax=ax1, fraction=0.046, pad=0.04)
 cbar1.ax.tick_params(labelsize=10)
 cbar1.ax.set_title('Bz (G)')
-k=200
-
+end_layer = 1000
+d = 10 # every d layer save
 ax2 = plt.subplot(122)
-# img2 = ax2.imshow(aia, cmap=sdoaia193, vmin=0,vmax=600)
+img2 = ax2.imshow(aia, cmap=sdoaia193, vmin=0,vmax=600)
 img2 = ax2.contour(aia, levels=[60], colors='#fbfdaf', linewidths=1)
-# img2 = ax2.imshow(BP3DZ[:,:,0]/BP3DZ[:,:,k], cmap="gray", vmin=0, vmax=10)  # 設定 colormap 和數值範圍
-# ax2.set_title(f"Bp Z-dir bottom / layer {k*5}")
-img2 = ax2.imshow(BP3DZ[:,:,k], cmap="gray")  # 設定 colormap 和數值範圍
-ax2.set_title(f"Bp Z-dir layer {k*5}")
+img2 = ax2.imshow(BP3DZ[:,:,0]/BP3DZ[:,:,end_layer//d], cmap="gray", vmin=0, vmax=10)  # 設定 colormap 和數值範圍
+ax2.set_title(f"Bp Z-dir bottom / layer {end_layer}")
+img2 = ax2.imshow(BP3DZ[:,:,end_layer//d], cmap="gray")  # 設定 colormap 和數值範圍
+ax2.set_title(f"Bp Z-dir layer {end_layer}")
 # ax2.set_xlabel("X-axis")
 # ax2.set_ylabel("Y-axis")
 cbar2 = plt.colorbar(img2, ax=ax2, fraction=0.046, pad=0.04)

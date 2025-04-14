@@ -7,8 +7,8 @@ import sunpy.visualization.colormaps as spcm
 import sunpy.map
 from datetime import datetime
 #　read cropped csv
-hmi = pd.read_csv("data_1271/hmi_CH1271_cropped_sp.csv")
-aia = pd.read_csv("data_1271/aia_CH1271_cropped_sp.csv")
+hmi = pd.read_csv("data_1271/hmi_CH1271_cropped_1p5_sp.csv")
+aia = pd.read_csv("data_1271/aia_CH1271_cropped_1p5_sp.csv")
 hmi = hmi.to_numpy() 
 print(hmi.shape)
 # 讀取 FITS 檔案

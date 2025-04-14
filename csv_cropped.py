@@ -5,8 +5,8 @@ import sunpy.visualization.colormaps as cm
 import matplotlib.colors as mcolors
 
 # 讀取 CSV 文件到 DataFrame
-hmi = pd.read_csv("data_1271/hmi_CH1271_cropped_sp.csv")
-aia = pd.read_csv("data_1271/aia_CH1271_cropped_sp.csv")
+hmi = pd.read_csv("data_1271/hmi_CH1271_cropped_1p5_sp.csv")
+aia = pd.read_csv("data_1271/aia_CH1271_cropped_1p5_sp.csv")
 
 # 顯示原始數據形狀
 print(f"Original hmi shape: {hmi.shape}")
@@ -17,7 +17,7 @@ print(f"Resized aia shape: {aia.shape}")
 fig = plt.figure(figsize = (10, 10))
 ax = plt.subplot(111)
 sdoaia193 = cm.cmlist["sdoaia193"]
-CH_threshold = 60
+CH_threshold = 100
 img1 = ax.contour(aia, levels=[CH_threshold], colors='white', linewidths=1)
 plt.imshow(aia, cmap=sdoaia193, vmin=0, vmax=600)
 plt.imshow(hmi, cmap="gray", vmin=-200,vmax=200, alpha=0.6)

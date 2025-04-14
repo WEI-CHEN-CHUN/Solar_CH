@@ -8,7 +8,7 @@ import pandas as pd
 
 # 讀取 FITS 檔案
 file_path_hmi = "./data_1271/hmi.m_45s.20250225_162145_TAI.2.magnetogram.fits"
-file_path_aia = "./data_1271/aia.lev1_euv_12s.2025-02-25T162106Z.193.image_lev1.fits"
+file_path_aia = "./data_1271/aia.lev1p5_euv_12s.2025-02-25T162106Z.193.image_lev1p5.fits"
 hmi_map = sunpy.map.Map(file_path_hmi)
 aia_map = sunpy.map.Map(file_path_aia)
 aia_df = pd.DataFrame(aia_map.data)
@@ -16,7 +16,7 @@ aia_df = pd.DataFrame(aia_map.data)
 # 讀取header
 hmi_header = hmi_map.wcs.to_header()
 aia_header = aia_map.wcs.to_header()
-for key, value in hmi_header.items():
+for key, value in aia_header.items():
     print(f"{key}: {value}")
 # 繪製hmi (灰階)
 fig = plt.figure(figsize = (20, 10))
@@ -52,5 +52,5 @@ ax2.set_xlim([x_range21, x_range22])
 ax2.set_ylim([y_range21, y_range22])
 plt.subplots_adjust(wspace=0.4, top=1.1)
 fig.suptitle("CH1271",fontsize = 20)
-# plt.show()
+plt.show()
 
