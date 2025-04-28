@@ -27,13 +27,15 @@ for key, value in hmi_header.items():
 # y_range1 = (-1000/3600-aia_header['CRVAL2'])/aia_header['CDELT2']+aia_header['CRPIX2']
 # y_range2 = (1000/3600-aia_header['CRVAL2'])/aia_header['CDELT2']+aia_header['CRPIX2']
 
-left_bottom = SkyCoord(-440 * u.arcsec, -340 * u.arcsec, frame=aia_map.coordinate_frame)
-right_top = SkyCoord(390 * u.arcsec, 790 * u.arcsec, frame=aia_map.coordinate_frame)
-
 # 裁剪地圖
+left_bottom = SkyCoord(-575 * u.arcsec, -525 * u.arcsec, frame=aia_map.coordinate_frame)
+right_top = SkyCoord(525 * u.arcsec, 975 * u.arcsec, frame=aia_map.coordinate_frame)
+left_pix = (140/3600-hmi_header['CRVAL1'])/hmi_header['CDELT1']
+top_pix = (190/3600-hmi_header['CRVAL2'])/hmi_header['CDELT2']
+print(left_pix, top_pix)
 aia_map = aia_map.submap(left_bottom, top_right=right_top)
-left_bottom = SkyCoord(-440 * u.arcsec, -340 * u.arcsec, frame=hmi_map.coordinate_frame)
-right_top = SkyCoord(390 * u.arcsec, 790 * u.arcsec, frame=hmi_map.coordinate_frame)
+left_bottom = SkyCoord(-575 * u.arcsec, -525 * u.arcsec, frame=hmi_map.coordinate_frame)
+right_top = SkyCoord(525 * u.arcsec, 975 * u.arcsec, frame=hmi_map.coordinate_frame)
 hmi_map = hmi_map.submap(left_bottom, top_right=right_top)
 
 # 轉換為 DataFrame
@@ -42,8 +44,8 @@ hmi_df = pd.DataFrame(hmi_map.data)
 hmi_df = hmi_df.iloc[:, ::-1]#hmi
 aia_df = aia_df.iloc[::-1, :]#aia
 # 存成 CSV
-aia_csv_filename = "data_1271/aia_CH1271_cropped_1p5_sp.csv"
-hmi_csv_filename = "data_1271/hmi_CH1271_cropped_1p5_sp.csv"
+aia_csv_filename = "data_1271/aia_CH1271_cropped_3p_sp.csv"
+hmi_csv_filename = "data_1271/hmi_CH1271_cropped_3p_sp.csv"
 aia_df.to_csv(aia_csv_filename, index=False, header=False)
 hmi_df.to_csv(hmi_csv_filename, index=False, header=False)
 
